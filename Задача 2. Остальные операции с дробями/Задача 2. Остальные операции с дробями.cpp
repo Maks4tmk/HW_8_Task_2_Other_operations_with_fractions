@@ -40,9 +40,11 @@ public:
 	Fraction operator * (const Fraction& other) { return Fraction((this->numerator_ * other.numerator_), (this->denominator_ * other.denominator_)); }
 	Fraction operator / (const Fraction& other) { return Fraction((this->numerator_ * other.denominator_), (this->denominator_ * other.numerator_)); }
 
-	Fraction& operator ++ () { this->numerator_ = numerator_ + denominator_, denominator_; return *this; }
-	Fraction& operator -- (int value) { Fraction other(*this); numerator_ = numerator_ - denominator_, denominator_; return other; }
+	Fraction& operator ++ () { numerator_ += denominator_, denominator_; return *this; }
+	Fraction& operator -- () { numerator_ -= denominator_, denominator_; return *this; }
 
+	Fraction operator ++ (int) { Fraction copy(*this); numerator_ += denominator_, denominator_; return copy; }
+	Fraction operator -- (int) { Fraction copy(*this); numerator_ -= denominator_, denominator_; return copy; }
 
 };
 
@@ -70,7 +72,7 @@ int main()
 	
 	std::cout << f1.get_numerator_() << "/" << f1.get_denominator_() << " + " << f2.get_numerator_() << "/" << f2.get_denominator_() << " = ";
 	f3 = f1 + f2;
-	std::cout << A1 << "/" << B1 << " + " << A2 << "/" << B2 << " = " << f3.get_numerator_() << "/" << f3.get_denominator_() << '\n';
+	std::cout << f3.get_numerator_() << "/" << f3.get_denominator_() << '\n';
 	
 
 	std::cout << f1.get_numerator_() << "/" << f1.get_denominator_() << " - " << f2.get_numerator_() << "/" << f2.get_denominator_() << " = ";
@@ -78,6 +80,7 @@ int main()
 	std::cout <<  f3.get_numerator_() << "/" << f3.get_denominator_() << '\n';
 	
 
+	std::cout << f1.get_numerator_() << "/" << f1.get_denominator_() << " * " << f2.get_numerator_() << "/" << f2.get_denominator_() << " = ";
 	f3 = f1 * f2;
 	f3.Reduction();
 	std::cout << f3.get_numerator_() << "/" << f3.get_denominator_() << '\n';
